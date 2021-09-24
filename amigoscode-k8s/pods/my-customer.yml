@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-customer
+  name: customer-c
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my-customer
+      app: customer-c
   template:
     metadata:
       labels:
-        app: my-customer
+        app: customer-c
     spec:
       containers:
-      - name: my-customer
+      - name: customer-c
         image: amigoscode/kubernetes:customer-v1
         resources:
           limits:
@@ -21,7 +21,7 @@ spec:
             cpu: "500m"
         env:
           - name: ORDER_SERVICE
-            value: my-order-service    
+            value: order    
         ports:
         - containerPort: 8080
 ---
@@ -29,13 +29,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-customer-service
+  name: customer
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
-    app: my-customer
+    app: customer-c
   ports:
   - port: 80
     targetPort: 8080
-    nodePort: 30000
 

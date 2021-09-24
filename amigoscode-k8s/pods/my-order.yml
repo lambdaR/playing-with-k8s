@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-order
+  name: order-c
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my-order
+      app: order-c
   template:
     metadata:
       labels:
-        app: my-order
+        app: order-c
     spec:
       containers:
-      - name: my-order
+      - name: order-c
         image: amigoscode/kubernetes:order-v1
         resources:
           limits:
@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-order-service
+  name: order
 spec:
   selector:
-    app: my-order
+    app: order-c
   ports:
   - port: 80
     targetPort: 8081
